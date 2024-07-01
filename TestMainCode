@@ -1,0 +1,86 @@
+// IN THIS PAGE WE IMPLEMENT SOME GETTERS AND SETTERS FOR FLUTTER SECURE LOCALSTORAGE
+
+import 'dart:convert';
+import 'package:bmyfinder/model/RetrievalPoint.dart';
+import 'package:bmyfinder/model/localUserOwnedObjects.dart';
+import 'package:bmyfinder/model/notificationIdentifiers.dart';
+import 'package:bmyfinder/model/Reward.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:uuid/uuid.dart';
+import '../model/localUser.dart';
+
+// LOG IDENTIFIER
+final LOG = "[StorageClient] ";
+
+// CHECK IF USERS EXISTS IN LOCAL STORAGE // LOGGED OR NOT ?
+Future<bool> checkIfExist() async {
+  final _storage = const FlutterSecureStorage();
+  var _uuid = await _storage.read(key: "localUser");
+
+  if (_uuid == Uuid.NAMESPACE_NIL ||
+      _uuid == "null" ||
+      _uuid == "" ||
+      _uuid == null) return false;
+
+  return true;
+}
+
+// GET USER FROM LOCAL STORAGE
+void getUser() {}
+
+// SAVE USER DATA TO LOCAL STORAGE
+Future<void> setUser(localUser user) async {
+  final _storage = const FlutterSecureStorage();
+  debugPrint(LOG + " : setUser : " + json.encode(user));
+  await _storage.write(key: "localUser", value: json.encode(user));
+}
+
+// SAVE USER OWNED OBJECTS TO LOCAL STORAGE
+Future<void> setUserOwnedObjects(
+    List<localUserOwnedObjects> ownedObjects) async {
+  final _storage = const FlutterSecureStorage();
+  debugPrint(LOG + " : setUser ownedObjects : " + json.encode(ownedObjects));
+
+  await _storage.write(key: "ownedObjects", value: json.encode(ownedObjects));
+}
+
+// SAVE USER Notification Identifiers TO LOCAL STORAGE
+Future<void> setUserNotificationIdentifiers(
+    List<notificationIdentifiers> _notificationIdentifiers) async {
+  final _storage = const FlutterSecureStorage();
+  debugPrint(LOG +
+      " : setUser NotificationIdentifiers : " +
+      json.encode(_notificationIdentifiers));
+
+  await _storage.write(
+      key: "NotificationIdentifiers",
+      value: json.encode(_notificationIdentifiers));
+}
+
+// SAVE USER DATA TO LOCAL STORAGE
+Future<void> setOffers(List<Reward> _offers) async {
+  final _storage = const FlutterSecureStorage();
+  await _storage.write(key: "offers", value: json.encode(_offers));
+}
+
+// SAVE USER DATA TO LOCAL STORAGE
+Future<void> setRetrievalPoint(List<RetrievalPoint> _retrievalPoint) async {
+  final _storage = const FlutterSecureStorage();
+  await _storage.write(
+      key: "RetrievalPoint", value: json.encode(_retrievalPoint));
+}
+
+// SET CURRENT USER UUID
+void setUuid(String Uuid) {
+  final _storage = const FlutterSecureStorage();
+  _storage.write(key: "localUser", value: Uuid);
+}
+
+// GET CURRENT USER UUID
+String getUuid() {
+  final _storage = const FlutterSecureStorage();
+  var _uuid = _storage.read(key: "localUser").toString();
+
+  return _uuid;
+}
