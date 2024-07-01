@@ -1,15 +1,5 @@
 // IN THIS PAGE WE IMPLEMENT SOME GETTERS AND SETTERS FOR FLUTTER SECURE LOCALSTORAGE
 
-import 'dart:convert';
-import 'package:bmyfinder/model/RetrievalPoint.dart';
-import 'package:bmyfinder/model/localUserOwnedObjects.dart';
-import 'package:bmyfinder/model/notificationIdentifiers.dart';
-import 'package:bmyfinder/model/Reward.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:uuid/uuid.dart';
-import '../model/localUser.dart';
-
 // LOG IDENTIFIER
 final LOG = "[StorageClient] ";
 
